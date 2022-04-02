@@ -103,7 +103,6 @@ int *print_meeting_intervals(int *arr, int start_time, int end_time, int meeting
         if(count_minutes >= meeting_duration && j != previous_printed_end_time){
             return_meeting_intervals[index_intervals++] = i;
             return_meeting_intervals[index_intervals++] = j;
-            printf("[%d, %d]", i, j);
             previous_printed_end_time = j;
         }
     }
@@ -178,7 +177,6 @@ int main()
         char *token = strtok(calendar_one, ",");
         while (token != NULL)
         {
-            printf("%s\n", token);
             if(given_hours % 2 == 0){
                 int hour = atoi(token + 3);
                 int digits_hour = digits(hour); // possible values: 1 or 2
@@ -200,16 +198,10 @@ int main()
             token = strtok(NULL, ",");
             given_hours++;
         }
-
-        for(int i=0; i<index1; i++){
-            printf("(%d : %d) -> (%d : %d)\n",
-                   intervals_calendar_one[i].start_hour, intervals_calendar_one[i].start_minute,
-                   intervals_calendar_one[i].end_hour, intervals_calendar_one[i].end_minute);
-        }
     }
 
     /// Range limit calendar 1:
-    printf("\nRange limit calendar 1: ");
+    printf("Range limit calendar 1: ");
     fgets(range_limit_one, 100, stdin);
     int *limits = get_limits(range_limit_one);
 
@@ -221,9 +213,6 @@ int main()
     int start_calendar1_to_array_index = start_hour_calendar1 * 60 + start_minute_calendar1;
     int end_calendar1_to_array_index   = end_hour_calendar1   * 60 + end_minute_calendar1;
 
-    printf("\n%d %d\n", start_calendar1_to_array_index, end_calendar1_to_array_index);
-
-
 
     /// Calendar 2:
     printf("Booked calendar 2: ");
@@ -232,7 +221,6 @@ int main()
         char *token = strtok(calendar_two, ",");
         while (token != NULL)
         {
-            printf("%s\n", token);
             if(given_hours % 2 == 0){
                 int hour = atoi(token + 3);
                 int digits_hour = digits(hour); // possible values: 1 or 2
@@ -254,16 +242,10 @@ int main()
             token = strtok(NULL, ",");
             given_hours++;
         }
-
-        for(int i=0; i<index2; i++){
-            printf("(%d : %d) -> (%d : %d)\n",
-                   intervals_calendar_two[i].start_hour, intervals_calendar_two[i].start_minute,
-                   intervals_calendar_two[i].end_hour, intervals_calendar_two[i].end_minute);
-        }
     }
 
     /// Range limit calendar 2:
-    printf("\nRange limit calendar 2: ");
+    printf("Range limit calendar 2: ");
     fgets(range_limit_two, 100, stdin);
     limits = get_limits(range_limit_two);
 
@@ -275,8 +257,6 @@ int main()
     int start_calendar2_to_array_index = start_hour_calendar2 * 60 + start_minute_calendar2;
     int end_calendar2_to_array_index   = end_hour_calendar2   * 60 + end_minute_calendar2;
 
-    printf("\n%d %d\n", start_calendar2_to_array_index, end_calendar2_to_array_index);
-
 
     /// Meeting duration:
     printf("\nMeeting duration: ");
@@ -287,17 +267,8 @@ int main()
 
     /// Set the minute_array
     set_minute_array(minute_array, intervals_calendar_one, intervals_calendar_two, index1, index2);
-    for(int i=0; i < MINUTES_IN_DAY; i ++){
-        printf("%d ", minute_array[i]);
-    }
-
-    printf("\n\n");
     int *meeting_intervals = print_meeting_intervals(minute_array, start_time, end_time, meeting_duration);
-    printf("\n\nhihi\n");
-    for(int i=0; i < MAX_MEETING_TIMES; i++){
-        printf("%d\n", meeting_intervals[i]);
-    }
-    printf("\n");
+
     pretty_print_intervals(meeting_intervals);
     return 0;
 }
